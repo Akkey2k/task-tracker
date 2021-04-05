@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import Calendar from 'react-calendar';
 
 import 'react-calendar/dist/Calendar.css';
 import './app-calendar.css';
 
+export default class AppCalendar extends Component {
+    constructor(){
+        super();
+        
+        this.state = {
+            value: new Date(),
+        }
 
-function AppCalendar() {
-  const [value, onChange] = useState(new Date());
+        this.onChange = (value) =>{
+            this.setState({
+                value
+            });
 
-  return (
-    <div className="app-calendar">
-      <Calendar
-        onChange={onChange}
-        value={value}
-      />
-    </div>
-  );
-}
+            const { onChange } = this.props;
+            onChange(value);
+        }
+    }
 
-export default AppCalendar;
+    render() {
+        const { value } = this.state;
+
+        return (
+            <div className="app-calendar">
+              <Calendar
+                onClickDay={(value)=> this.onChange(value)}
+                value={value}
+              />
+            </div>
+          );
+    }
+};

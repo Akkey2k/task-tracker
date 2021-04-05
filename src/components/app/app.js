@@ -15,12 +15,13 @@ export default class App extends Component {
 
     this.state = {
       todoData: [
-        { label: 'Drink Coffee', id: 1, important: false, done: false },
-        { label: 'Make Awesome App', id: 2, important: false, done: false },
-        { label: 'Have a lunch', id: 3, important: false, done: false },
+        { label: 'Drink Coffee', id: 1, important: false, done: false, dateCreate: [15, 4, 2021] },
+        { label: 'Make Awesome App', id: 2, important: false, done: false, dateCreate: [15, 4, 2021] },
+        { label: 'Have a lunch', id: 3, important: false, done: false, dateCreate: [14, 4, 2021] },
       ],
       label: "",
       filterProp: "all",
+      chosenDate: [new Date().getDate(), new Date().getMonth() + 1, new Date().getFullYear()],
     };
 
     this.createTodoDataItem = (label) => {
@@ -30,6 +31,7 @@ export default class App extends Component {
         id: todoData.length + 1,
         important: false,
         done: false,
+        dateCreate: this.formatDate(new Date()),
       }
     };
 
@@ -117,9 +119,8 @@ export default class App extends Component {
       });
     };
 
-    this.filterItems = (filter) => {
-      const { todoData } = this.state;
-      let filteredTodoItems = todoData.filter((el) => {
+    this.filterItems = (visibleItems, filter) => {
+      let filteredTodoItems = visibleItems.filter((el) => {
         if(filter === "done"){
           return el.done
         }
@@ -127,7 +128,7 @@ export default class App extends Component {
           return !el.done
         }
         else if(filter === "all"){
-          return todoData
+          return visibleItems
         }
 
         return []; // default
@@ -135,19 +136,54 @@ export default class App extends Component {
 
       return filteredTodoItems
     };
+
+    this.formatDate = (date) => {
+      return [
+        date.getDate(),
+        date.getMonth() + 1,
+        date.getFullYear(),
+      ];
+    };
+
+    this.dateChange = (date) => {
+      date = this.formatDate(date)
+
+      this.setState({
+        chosenDate: date
+      });
+    };
+
+    this.findItemsByDate = (date) => {
+      const { todoData } = this.state;
+      let findedTodoItems = todoData.filter((el) => {
+        for(let i in date){
+          if(el.dateCreate[i] === date[i]){
+            return true
+          }
+          else{
+            return false
+          }
+        }
+
+        return false;
+      });
+
+      return findedTodoItems
+    };
   };
 
   render(){
-    const { todoData, label, filterProp} = this.state;
+    const { todoData, label, filterProp, chosenDate} = this.state;
     const doneCount = todoData.filter((el) => el.done).length;
     const todoCount = todoData.length - doneCount;
     
-    let visibleItems = this.filterItems(filterProp);
+    let visibleItems = this.findItemsByDate(chosenDate);
+        visibleItems = this.filterItems(visibleItems, filterProp);
         visibleItems = this.search(visibleItems, label);
 
     return (
       <div className="app-wrapper">
-        <AppCalendar/>
+        <AppCalendar onChange={(date) => this.dateChange(date)}/>
 
         <div className="todo-app">
           <AppHeader toDo={todoCount} done={doneCount} />
