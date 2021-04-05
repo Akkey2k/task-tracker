@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import AppHeader from '../app-header';
+import AppCalendar from '../app-calendar';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
@@ -145,22 +146,26 @@ export default class App extends Component {
         visibleItems = this.search(visibleItems, label);
 
     return (
-      <div className="todo-app">
-        <AppHeader toDo={todoCount} done={doneCount} />
-        <div className="top-panel d-flex">
-          <SearchPanel onSearchTodoItem={(label) => this.searchInputChanged(label)}/>
-          <ItemStatusFilter onFilterTodoItems={(filter) => this.filterChanged(filter)}/>
-        </div>
-  
-        <TodoList 
-          todos={visibleItems}
-          onDeleted={(id) => this.deleteListItem(id)}
-          onToggleDone={(id) => this.toggleDone(id)}
-          onToggleImportant={(id) => this.toggleImportant(id)}
+      <div className="app-wrapper">
+        <AppCalendar/>
+
+        <div className="todo-app">
+          <AppHeader toDo={todoCount} done={doneCount} />
+          <div className="top-panel d-flex">
+            <SearchPanel onSearchTodoItem={(label) => this.searchInputChanged(label)}/>
+            <ItemStatusFilter onFilterTodoItems={(filter) => this.filterChanged(filter)}/>
+          </div>
+    
+          <TodoList 
+            todos={visibleItems}
+            onDeleted={(id) => this.deleteListItem(id)}
+            onToggleDone={(id) => this.toggleDone(id)}
+            onToggleImportant={(id) => this.toggleImportant(id)}
+            />
+          <ItemAddForm 
+            onAddItem={(label) => this.AddItem(label)}
           />
-        <ItemAddForm 
-          onAddItem={(label) => this.AddItem(label)}
-        />
+        </div>
       </div>
     );
   }
