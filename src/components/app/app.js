@@ -173,13 +173,14 @@ export default class App extends Component {
   };
 
   render(){
-    const { todoData, label, filterProp, chosenDate} = this.state;
-    const doneCount = todoData.filter((el) => el.done).length;
-    const todoCount = todoData.length - doneCount;
+    const { label, filterProp, chosenDate} = this.state;
     
     let visibleItems = this.findItemsByDate(chosenDate);
         visibleItems = this.filterItems(visibleItems, filterProp);
         visibleItems = this.search(visibleItems, label);
+
+    const doneCount = visibleItems.filter((el) => el.done).length;
+    const todoCount = visibleItems.length - doneCount;
 
     return (
       <div className="app-wrapper">
