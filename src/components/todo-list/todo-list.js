@@ -15,7 +15,7 @@ export default class TodoList extends Component {
   render() {
     const { todos, onDeleted, onToggleDone, onToggleImportant } = this.props;
 
-    let elements = todos.map((item) => {
+    const elements = todos.map((item) => {
       const { id, ...itemProps } = item;
   
       return (
