@@ -201,8 +201,6 @@ export default class App extends Component {
     const doneCount = visibleItems.filter((el) => el.done).length;
     const todoCount = visibleItems.length - doneCount;
 
-    console.log(visibleItems);
-
     return (
       <div className="app-wrapper">
         <AppCalendar onChange={(date) => this.dateChange(date)}/>
