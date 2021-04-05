@@ -12,6 +12,11 @@
   line-height: 35px;
   cursor: pointer;
   user-select: none;
+
+  display: inline-block;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .todo-list-item.done .todo-list-item-label {
