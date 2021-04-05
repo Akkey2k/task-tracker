@@ -25,13 +25,13 @@ export default class App extends Component {
     };
 
     this.createTodoDataItem = (label) => {
-      const { todoData } = this.state;
+      const { todoData, chosenDate } = this.state;
       return {
         label, 
         id: todoData.length + 1,
         important: false,
         done: false,
-        dateCreate: this.formatDate(new Date()),
+        dateCreate: chosenDate,
       }
     };
 
