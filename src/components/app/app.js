@@ -15,19 +15,38 @@ export default class App extends Component {
 
     this.state = {
       todoData: [
-        { label: 'Drink Coffee', id: 1, important: false, done: false, dateCreate: [15, 4, 2021] },
-        { label: 'Make Awesome App', id: 2, important: false, done: false, dateCreate: [15, 4, 2021] },
-        { label: 'Have a lunch', id: 3, important: false, done: false, dateCreate: [14, 4, 2021] },
+        { label: 'Drink Coffee',
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
+          id: 1,
+          important: false, 
+          done: false, 
+          dateCreate: [15, 4, 2021]
+        },
+        { label: 'Eat some cake',
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
+          id: 2,
+          important: false, 
+          done: false, 
+          dateCreate: [15, 4, 2021]
+        },
+        { label: 'Drink Coffee again',
+          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
+          id: 3,
+          important: false, 
+          done: false, 
+          dateCreate: [15, 4, 2021]
+        },
       ],
       label: "",
       filterProp: "all",
       chosenDate: [new Date().getDate(), new Date().getMonth() + 1, new Date().getFullYear()],
     };
 
-    this.createTodoDataItem = (label) => {
+    this.createTodoDataItem = (label, description) => {
       const { todoData, chosenDate } = this.state;
       return {
         label, 
+        description,
         id: todoData.length + 1,
         important: false,
         done: false,
@@ -50,9 +69,9 @@ export default class App extends Component {
       })
     };
 
-    this.AddItem = (label) => {
+    this.AddItem = (label, description) => {
       this.setState(({ todoData }) =>{
-        const newTodoItem = this.createTodoDataItem(label);
+        const newTodoItem = this.createTodoDataItem(label, description);
         const newTodoData = [
           ...todoData,
           newTodoItem
@@ -182,6 +201,8 @@ export default class App extends Component {
     const doneCount = visibleItems.filter((el) => el.done).length;
     const todoCount = visibleItems.length - doneCount;
 
+    console.log(visibleItems);
+
     return (
       <div className="app-wrapper">
         <AppCalendar onChange={(date) => this.dateChange(date)}/>
@@ -200,7 +221,7 @@ export default class App extends Component {
             onToggleImportant={(id) => this.toggleImportant(id)}
             />
           <ItemAddForm 
-            onAddItem={(label) => this.AddItem(label)}
+            onAddItem={(label, description) => this.AddItem(label, description)}
           />
         </div>
       </div>

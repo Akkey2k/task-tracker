@@ -8,6 +8,7 @@ export default class ItemAddForm extends Component {
 
         this.state ={
             label: "",
+            description: "",
             buttonDisabled: true,
         };
 
@@ -18,16 +19,24 @@ export default class ItemAddForm extends Component {
             });
         };
 
+        this.onTextAreaChange = (event) => {
+            this.setState({
+                description: event.target.value,
+                buttonDisabled: false,
+            });
+        };
+
         this.onFormSubmit = (event) => {
             event.preventDefault();
             const { onAddItem } = this.props;
-            const { label } = this.state;
+            const { label, description } = this.state;
 
             if(label){
-                onAddItem(label);
+                onAddItem(label, description);
 
                 this.setState({
                     label: "",
+                    description: "",
                 });
             } else{
                 this.setState({
@@ -38,7 +47,7 @@ export default class ItemAddForm extends Component {
     }
 
     render(){
-        const { label, buttonDisabled } = this.state;
+        const { label, description, buttonDisabled } = this.state;
 
         let buttonClassList = "btn btn-outline-secondary";
         
@@ -50,9 +59,14 @@ export default class ItemAddForm extends Component {
             <form className="item-add-form" onSubmit={this.onFormSubmit}>
                 <input type="text" 
                     className="form-control mb-1"
-                    placeholder="Type new task name"
+                    placeholder="Type new task title"
                     value={label}
                     onChange={this.onInputChange}/>
+                <textarea type="text" 
+                    className="form-control mb-1"
+                    placeholder="Type description"
+                    value={description}
+                    onChange={this.onTextAreaChange}/>
                 <button className={buttonClassList}>
                     Add task
                 </button>
