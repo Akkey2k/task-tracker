@@ -1,0 +1,30 @@
+.app-details {
+    width: 20%;
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+}
+.app-details.hide {
+    display: none;
+}
+
+.app-details-close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border: 1px #2b2b2b solid;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+.app-details-close::before{
+    margin-bottom: 1.5px;
+}

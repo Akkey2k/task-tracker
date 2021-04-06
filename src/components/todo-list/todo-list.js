@@ -13,7 +13,7 @@ export default class TodoList extends Component {
   };
 
   render() {
-    const { todos, onDeleted, onToggleDone, onToggleImportant } = this.props;
+    const { todos, onDeleted, onToggleDone, onToggleImportant, onShowDetails } = this.props;
 
     const elements = todos.map((item) => {
       const { id, ...itemProps } = item;
@@ -25,6 +25,7 @@ export default class TodoList extends Component {
             onDeleted = {() => onDeleted(id)}
             onToggleDone = {() => onToggleDone(id)}
             onToggleImportant = {() => onToggleImportant(id)}
+            onShowDetails = {() => onShowDetails(id)}
           />
         </li>
       );

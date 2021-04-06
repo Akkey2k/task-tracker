@@ -5,7 +5,8 @@ import AppCalendar from '../app-calendar';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
-import ItemAddForm from '../item-add-form'
+import ItemAddForm from '../item-add-form';
+import AppDetails from '../app-details';
 
 import './app.css';
 
@@ -40,6 +41,7 @@ export default class App extends Component {
       label: "",
       filterProp: "all",
       chosenDate: [new Date().getDate(), new Date().getMonth() + 1, new Date().getFullYear()],
+      detailsId: null
     };
 
     this.createTodoDataItem = (label, description) => {
@@ -189,15 +191,23 @@ export default class App extends Component {
 
       return findedTodoItems
     };
+
+    this.showDetails = (id) => {
+      this.setState({
+        detailsId: id
+      });
+    };
   };
 
   render(){
-    const { label, filterProp, chosenDate} = this.state;
+    const { label, filterProp, chosenDate, detailsId } = this.state;
     
+    // Фильтрация данных для показа
     let visibleItems = this.findItemsByDate(chosenDate);
         visibleItems = this.filterItems(visibleItems, filterProp);
         visibleItems = this.search(visibleItems, label);
 
+    // Расчет счетчиков more to do\done задач
     const doneCount = visibleItems.filter((el) => el.done).length;
     const todoCount = visibleItems.length - doneCount;
 
@@ -206,7 +216,7 @@ export default class App extends Component {
         <AppCalendar onChange={(date) => this.dateChange(date)}/>
 
         <div className="todo-app">
-          <AppHeader toDo={todoCount} done={doneCount} />
+          <AppHeader toDo={ todoCount } done={ doneCount } />
           <div className="top-panel d-flex">
             <SearchPanel onSearchTodoItem={(label) => this.searchInputChanged(label)}/>
             <ItemStatusFilter onFilterTodoItems={(filter) => this.filterChanged(filter)}/>
@@ -217,11 +227,14 @@ export default class App extends Component {
             onDeleted={(id) => this.deleteListItem(id)}
             onToggleDone={(id) => this.toggleDone(id)}
             onToggleImportant={(id) => this.toggleImportant(id)}
+            onShowDetails={(id) => this.showDetails(id)}
             />
           <ItemAddForm 
             onAddItem={(label, description) => this.AddItem(label, description)}
           />
         </div>
+
+        <AppDetails detailsId={ detailsId }/>
       </div>
     );
   }

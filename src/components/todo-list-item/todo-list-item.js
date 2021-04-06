@@ -4,7 +4,7 @@ import './todo-list-item.css';
 
 export default class TodoListItem extends Component{
   render(){
-    const { label, done, important, onDeleted, onToggleDone, onToggleImportant } = this.props;
+    const { label, done, important, onDeleted, onToggleDone, onToggleImportant, onShowDetails } = this.props;
 
     let classList = "todo-list-item";
     
@@ -16,7 +16,7 @@ export default class TodoListItem extends Component{
       <span className={classList}>
         <span
           className="todo-list-item-label"
-          onClick={ onToggleDone }
+          onClick={ onShowDetails }
           title={label}>
           {label}
         </span>
@@ -31,8 +31,8 @@ export default class TodoListItem extends Component{
 
         <button type="button"
                 className="btn btn-outline-primary btn-sm float-right"
-                onClick={onToggleImportant}>
-          <i className="fa fa-file" />
+                onClick={ onToggleDone }>
+          <i className="fa fa-check" />
         </button>
 
         <button type="button"
