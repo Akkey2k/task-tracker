@@ -41,7 +41,8 @@ export default class App extends Component {
       label: "",
       filterProp: "all",
       chosenDate: [new Date().getDate(), new Date().getMonth() + 1, new Date().getFullYear()],
-      detailsId: null
+      detailsId: null,
+      isVisibleDetails: false,
     };
 
     this.createTodoDataItem = (label, description) => {
@@ -194,13 +195,21 @@ export default class App extends Component {
 
     this.showDetails = (id) => {
       this.setState({
-        detailsId: id
+        detailsId: id,
+        isVisibleDetails: true,
+      });
+    };
+
+    this.hideDetails = () => {
+      this.setState({
+        detailsId: null,
+        isVisibleDetails: false,
       });
     };
   };
 
   render(){
-    const { label, filterProp, chosenDate, detailsId } = this.state;
+    const { label, filterProp, chosenDate, isVisibleDetails, detailsId } = this.state;
     
     // Фильтрация данных для показа
     let visibleItems = this.findItemsByDate(chosenDate);
@@ -234,7 +243,12 @@ export default class App extends Component {
           />
         </div>
 
-        <AppDetails detailsId={ detailsId }/>
+        <AppDetails 
+          onHideDetails = { () => this.hideDetails() }
+          detailsId={ detailsId }
+          visibleItems = { visibleItems }
+          isVisible = { isVisibleDetails }
+        />
       </div>
     );
   }
