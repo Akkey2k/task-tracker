@@ -193,30 +193,20 @@ export default class App extends Component {
       return findedTodoItems
     };
 
-    this.showDetails = (id) => {
-      this.setState({
-        detailsId: id,
-        isVisibleDetails: true,
-      });
-    };
-
-    this.hideDetails = () => {
-      this.setState({
-        detailsId: null,
-        isVisibleDetails: false,
-      });
+    this.setDetailsId = (id) => {
+      this.setState({detailsId: id});
     };
   };
 
   render(){
-    const { label, filterProp, chosenDate, isVisibleDetails, detailsId } = this.state;
+    const { label, filterProp, chosenDate, detailsId } = this.state;
     
     // Фильтрация данных для показа
     let visibleItems = this.findItemsByDate(chosenDate);
         visibleItems = this.filterItems(visibleItems, filterProp);
         visibleItems = this.search(visibleItems, label);
 
-    // Расчет счетчиков more to do\done задач
+    // Счетчики more to do\done задач
     const doneCount = visibleItems.filter((el) => el.done).length;
     const todoCount = visibleItems.length - doneCount;
 
@@ -236,19 +226,14 @@ export default class App extends Component {
             onDeleted={(id) => this.deleteListItem(id)}
             onToggleDone={(id) => this.toggleDone(id)}
             onToggleImportant={(id) => this.toggleImportant(id)}
-            onShowDetails={(id) => this.showDetails(id)}
+            onShowDetails={(id) => this.setDetailsId(id)}
             />
           <ItemAddForm 
             onAddItem={(label, description) => this.AddItem(label, description)}
           />
         </div>
 
-        <AppDetails 
-          onHideDetails = { () => this.hideDetails() }
-          detailsId={ detailsId }
-          visibleItems = { visibleItems }
-          isVisible = { isVisibleDetails }
-        />
+        <AppDetails visibleItems={ visibleItems } detailsId={ detailsId }/>
       </div>
     );
   }
