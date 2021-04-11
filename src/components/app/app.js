@@ -194,12 +194,21 @@ export default class App extends Component {
     };
 
     this.setDetailsId = (id) => {
-      this.setState({detailsId: id});
+      this.setState({
+        detailsId: id,
+        isVisibleDetails: true
+      });
+    };
+
+    this.hideDetails = () => {
+      this.setState({
+        isVisibleDetails: false
+      });
     };
   };
 
   render(){
-    const { label, filterProp, chosenDate, detailsId } = this.state;
+    const { label, filterProp, chosenDate, detailsId, isVisibleDetails } = this.state;
     
     // Фильтрация данных для показа
     let visibleItems = this.findItemsByDate(chosenDate);
@@ -233,7 +242,12 @@ export default class App extends Component {
           />
         </div>
 
-        <AppDetails visibleItems={ visibleItems } detailsId={ detailsId }/>
+        <AppDetails 
+          visibleItems={ visibleItems } 
+          detailsId={ detailsId } 
+          isVisible = { isVisibleDetails }
+          onHideDetails={ () => this.hideDetails()}
+          />
       </div>
     );
   }

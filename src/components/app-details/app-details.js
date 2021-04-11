@@ -15,14 +15,16 @@ export default class AppDetails extends Component {
     };
 
     render() {
-        const { visibleItems, detailsId } = this.props;
+        const { visibleItems, detailsId, isVisible, onHideDetails } = this.props;
         const itemDetails = this.getFullDetails(visibleItems, detailsId);
         const label = itemDetails ? itemDetails.label : "";
         const description = itemDetails ? itemDetails.description : "";
 
+        const classToggleVision = isVisible ? "app-details" : "app-details hide"
+
         return(
-            <div className="app-details" 
-                onClick={ () => this.hideDetails}>
+            <div className={ classToggleVision } 
+                onClick={ () => onHideDetails()}>
                 <h2>Описание</h2>
                 <span className="app-details-close fa fa-times"></span>
 
