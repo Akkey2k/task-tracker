@@ -7,19 +7,25 @@ import "./app.css"
 export default class ProjecSelector extends Component {
     render() {
         return (
-            <div>
-                <h1>Привет</h1>
+            <div className="project-selector-wrapper">
+                <h1>Привет,</h1>
                 <h2>
-                    Выбери проект на сегодня
+                    выбери проект на сегодня
                 </h2>
-                <select>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                </select>
-                <button>
-                    <Link to="/Manager">Выбрать</Link>
-                </button>
+                <div class="form-group d-flex">
+                    <select className="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    <Link to="/Manager">
+                        <button className="btn btn-primary ml-1">
+                            Выбрать
+                        </button>
+                    </Link>
+                </div>
             </div>
         )
     }

@@ -5,7 +5,7 @@
 .app-header-title{
   display: flex;
   align-items: center;
-  flex-grow: 1;
+  margin-right: auto;
   color: black;
 }
 .app-header-title:hover{
