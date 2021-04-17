@@ -19,6 +19,7 @@ export default class App extends Component {
         { label: 'Drink Coffee',
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
           id: 1,
+          projectCode: "WSO",
           important: false, 
           done: false, 
           dateCreate: [15, 4, 2021]
@@ -26,6 +27,7 @@ export default class App extends Component {
         { label: 'Eat some cake',
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
           id: 2,
+          projectCode: "KLM",
           important: false, 
           done: false, 
           dateCreate: [15, 4, 2021]
@@ -33,6 +35,7 @@ export default class App extends Component {
         { label: 'Drink Coffee again',
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
           id: 3,
+          projectCode: "TAYX",
           important: false, 
           done: false, 
           dateCreate: [15, 4, 2021]
@@ -175,9 +178,8 @@ export default class App extends Component {
       });
     };
 
-    this.findItemsByDate = (date) => {
-      const { todoData } = this.state;
-      let findedTodoItems = todoData.filter((el) => {
+    this.findItemsByDate = (visibleItems, date) => {
+      let findedTodoItems = visibleItems.filter((el) => {
         for(let i in date){
           if(el.dateCreate[i] === date[i]){
             return true
@@ -190,6 +192,19 @@ export default class App extends Component {
         return false;
       });
 
+      return findedTodoItems
+    };
+
+    this.findItemsByProjectCode = (code) => {
+      const { todoData } = this.state;
+      let findedTodoItems = todoData.filter((el) => {
+        if(el.projectCode === code){
+          return true
+        }
+        else{
+          return false
+        }
+      });
       return findedTodoItems
     };
 
@@ -209,22 +224,24 @@ export default class App extends Component {
 
   render(){
     const { label, filterProp, chosenDate, detailsId, isVisibleDetails } = this.state;
+    const { projectCode } = this.props.match.params;
     
     // Фильтрация данных для показа
-    let visibleItems = this.findItemsByDate(chosenDate);
+    let visibleItems = this.findItemsByProjectCode(projectCode);
+        visibleItems = this.findItemsByDate(visibleItems, chosenDate);
         visibleItems = this.filterItems(visibleItems, filterProp);
         visibleItems = this.search(visibleItems, label);
 
     // Счетчики more to do\done задач
     const doneCount = visibleItems.filter((el) => el.done).length;
     const todoCount = visibleItems.length - doneCount;
-
+    
     return (
       <div className="app-wrapper">
         <AppCalendar onChange={(date) => this.dateChange(date)}/>
 
         <div className="todo-app">
-          <AppHeader toDo={ todoCount } done={ doneCount } />
+          <AppHeader title={projectCode} toDo={ todoCount } done={ doneCount } />
           <div className="top-panel d-flex">
             <SearchPanel onSearchTodoItem={(label) => this.searchInputChanged(label)}/>
             <ItemStatusFilter onFilterTodoItems={(filter) => this.filterChanged(filter)}/>

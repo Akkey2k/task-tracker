@@ -13,7 +13,7 @@ const StartPage = () => {
   return (
     <Router history={History}>
         <Route exact path="/" component={ProjectSelector} />
-        <Route path="/manager" component={Manager} />
+        <Route path="/manager/:projectCode" component={Manager} />
     </Router>
   )
 };
