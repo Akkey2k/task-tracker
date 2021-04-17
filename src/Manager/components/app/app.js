@@ -238,8 +238,6 @@ export default class App extends Component {
           ...todoData.slice(idx + 1)
         ]
 
-        console.log(newTodoData);
-
         return {
           todoData: newTodoData
         }
