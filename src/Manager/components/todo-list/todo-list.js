@@ -32,7 +32,6 @@ export default class TodoList extends Component {
     });
 
     const isEmptyTodos = elements.length ? true : false;
-    console.log(isEmptyTodos); 
   
     return (
       <ul className="list-group todo-list">
