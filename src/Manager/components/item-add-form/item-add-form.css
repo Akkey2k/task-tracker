@@ -2,8 +2,11 @@
     margin-top: 1rem;
 }
 
-.item-add-form input{
-    width: 100%;
+.item-add-form input:nth-child(1){
+    width: 90%;
+}
+.item-add-form input:nth-child(2){
+    width: 10%;
 }
 
 .item-add-form button{

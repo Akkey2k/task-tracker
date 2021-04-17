@@ -17,6 +17,7 @@ export default class App extends Component {
     this.state = {
       todoData: [
         { label: 'Drink Coffee',
+          time: 0,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
           id: 1,
           projectCode: "WSO",
@@ -25,6 +26,7 @@ export default class App extends Component {
           dateCreate: [15, 4, 2021]
         },
         { label: 'Eat some cake',
+          time: 0,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
           id: 2,
           projectCode: "KLM",
@@ -33,6 +35,7 @@ export default class App extends Component {
           dateCreate: [15, 4, 2021]
         },
         { label: 'Drink Coffee again',
+          time: 0,
           description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
           id: 3,
           projectCode: "TAYX",
@@ -48,10 +51,11 @@ export default class App extends Component {
       isVisibleDetails: false,
     };
 
-    this.createTodoDataItem = (label, description, projectCode) => {
+    this.createTodoDataItem = (label, time, description, projectCode) => {
       const { todoData, chosenDate } = this.state;
       return {
         label, 
+        time,
         description,
         id: todoData.length + 1,
         projectCode,
@@ -76,9 +80,9 @@ export default class App extends Component {
       })
     };
 
-    this.AddItem = (label, description, projectCode) => {
+    this.AddItem = (label, time, description, projectCode) => {
       this.setState(({ todoData }) =>{
-        const newTodoItem = this.createTodoDataItem(label, description, projectCode);
+        const newTodoItem = this.createTodoDataItem(label, time, description, projectCode);
         const newTodoData = [
           ...todoData,
           newTodoItem
@@ -222,17 +226,19 @@ export default class App extends Component {
       });
     };
 
-    this.todoChange = (detailsId, newLabel, newDescription) => {
+    this.todoChange = (detailsId, newLabel, newTime, newDescription) => {
       this.setState(({ todoData }) =>{
         const idx = todoData.findIndex((el) => el.id === detailsId);
         const oldItem = todoData[idx];
-        const newItem = {...oldItem, label: newLabel, description: newDescription}
+        const newItem = {...oldItem, label: newLabel, time: newTime, description: newDescription}
 
         const newTodoData = [
           ...todoData.slice(0, idx),
           newItem,
           ...todoData.slice(idx + 1)
         ]
+
+        console.log(newTodoData);
 
         return {
           todoData: newTodoData
@@ -275,7 +281,7 @@ export default class App extends Component {
             onShowDetails={(id) => this.setDetailsId(id)}
             />
           <ItemAddForm 
-            onAddItem={(label, description) => this.AddItem(label, description, projectCode)}
+            onAddItem={(label, time, description) => this.AddItem(label, time, description, projectCode)}
           />
         </div>
 
@@ -284,7 +290,7 @@ export default class App extends Component {
           detailsId={ detailsId } 
           isVisible = { isVisibleDetails }
           onHideDetails={ () => this.hideDetails()}
-          onTodoChange={(detailsId, newLabel, newDescription) => this.todoChange(detailsId, newLabel, newDescription)}
+          onTodoChange={(detailsId, newLabel, newTime, newDescription) => this.todoChange(detailsId, newLabel, newTime, newDescription)}
           />
       </div>
     );
