@@ -48,12 +48,13 @@ export default class App extends Component {
       isVisibleDetails: false,
     };
 
-    this.createTodoDataItem = (label, description) => {
+    this.createTodoDataItem = (label, description, projectCode) => {
       const { todoData, chosenDate } = this.state;
       return {
         label, 
         description,
         id: todoData.length + 1,
+        projectCode,
         important: false,
         done: false,
         dateCreate: chosenDate,
@@ -75,9 +76,9 @@ export default class App extends Component {
       })
     };
 
-    this.AddItem = (label, description) => {
+    this.AddItem = (label, description, projectCode) => {
       this.setState(({ todoData }) =>{
-        const newTodoItem = this.createTodoDataItem(label, description);
+        const newTodoItem = this.createTodoDataItem(label, description, projectCode);
         const newTodoData = [
           ...todoData,
           newTodoItem
@@ -235,7 +236,7 @@ export default class App extends Component {
     // Счетчики more to do\done задач
     const doneCount = visibleItems.filter((el) => el.done).length;
     const todoCount = visibleItems.length - doneCount;
-    
+
     return (
       <div className="app-wrapper">
         <AppCalendar onChange={(date) => this.dateChange(date)}/>
@@ -255,7 +256,7 @@ export default class App extends Component {
             onShowDetails={(id) => this.setDetailsId(id)}
             />
           <ItemAddForm 
-            onAddItem={(label, description) => this.AddItem(label, description)}
+            onAddItem={(label, description) => this.AddItem(label, description, projectCode)}
           />
         </div>
 
