@@ -12,13 +12,30 @@ export default class AppDetails extends Component {
               return visibleItems[i];
             }
         };
+
+        this.saveChanges = (label, description) => {
+            const { onTodoChange, detailsId } = this.props;
+
+            let labelFieldText = document.querySelector(".app-details-editable-label").innerText;
+            let descriptionFieldText = document.querySelector(".app-details-editable-description").innerText;
+
+            if(label !== labelFieldText || description !== descriptionFieldText){
+                if(labelFieldText === ""){
+                    labelFieldText = "Без названия"
+                }
+                if(descriptionFieldText === ""){
+                    descriptionFieldText = "Без описания"
+                }
+                onTodoChange(detailsId, labelFieldText, descriptionFieldText);
+            }
+        };
     };
 
     render() {
-        const { visibleItems, detailsId, isVisible, onHideDetails } = this.props;
+        const { visibleItems, detailsId, isVisible, onHideDetails} = this.props;
         const itemDetails = this.getFullDetails(visibleItems, detailsId);
-        const label = itemDetails ? itemDetails.label : "";
-        const description = itemDetails ? itemDetails.description : "";
+        const label = itemDetails ? itemDetails.label : "Без названия";
+        const description = itemDetails ? itemDetails.description : "Без описания";
 
         const classToggleVision = isVisible ? "app-details" : "app-details hide"
 
@@ -30,8 +47,18 @@ export default class AppDetails extends Component {
                     onClick={ () => onHideDetails()}>
                 </span>
 
-                <p><b>Название: </b> { label }</p>
-                <p className="app-details__description"><b>Описание: </b> { description }</p>
+                <p>
+                    <b>Название: </b>
+                    <span className="app-details-editable app-details-editable-label" contentEditable={true} suppressContentEditableWarning={true}>{ label }</span>
+                </p>
+                <p className="app-details__description">
+                    <b>Описание: </b>
+                    <span className="app-details-editable app-details-editable-description" contentEditable={true} suppressContentEditableWarning={true}>{ description }</span>
+                </p>
+                <button className="btn btn-outline-primary"
+                        onClick={() => this.saveChanges(label, description)}>
+                    Сохранить
+                </button>
             </div>
         )
     }

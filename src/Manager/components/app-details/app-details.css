@@ -35,3 +35,7 @@
     max-height: 70%;
     overflow-y: auto;
 }
+
+.app-details-editable[contenteditable="true"]{
+    outline: none;
+}

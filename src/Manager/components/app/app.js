@@ -221,6 +221,25 @@ export default class App extends Component {
         isVisibleDetails: false
       });
     };
+
+    this.todoChange = (detailsId, newLabel, newDescription) => {
+      this.setState(({ todoData }) =>{
+        const idx = todoData.findIndex((el) => el.id === detailsId);
+        const oldItem = todoData[idx];
+        const newItem = {...oldItem, label: newLabel, description: newDescription}
+
+        const newTodoData = [
+          ...todoData.slice(0, idx),
+          newItem,
+          ...todoData.slice(idx + 1)
+        ]
+
+        return {
+          todoData: newTodoData
+        }
+      });
+
+    };
   };
 
   render(){
@@ -265,6 +284,7 @@ export default class App extends Component {
           detailsId={ detailsId } 
           isVisible = { isVisibleDetails }
           onHideDetails={ () => this.hideDetails()}
+          onTodoChange={(detailsId, newLabel, newDescription) => this.todoChange(detailsId, newLabel, newDescription)}
           />
       </div>
     );
