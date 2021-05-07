@@ -5,7 +5,7 @@
 
 ## Технологии
 * React JS
-* FireBase
+* localStorage
 
 ## Установка проекта
 `npm i`
