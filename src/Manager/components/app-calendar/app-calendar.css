@@ -4,3 +4,6 @@
     top: 2rem;
     left: 2rem;
 }
+.app-calendar .day-has-todo{
+    background-color: #d1e9ff;
+}
