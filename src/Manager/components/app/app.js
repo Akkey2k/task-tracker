@@ -8,6 +8,8 @@ import ItemStatusFilter from '../item-status-filter';
 import ItemAddForm from '../item-add-form';
 import AppDetails from '../app-details';
 
+import store from "store";
+
 import './app.css';
 
 export default class App extends Component {
@@ -15,40 +17,40 @@ export default class App extends Component {
     super();
 
     this.state = {
-      todoData: [
-        { label: 'Drink Coffee',
-          time: 0,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
-          id: 1,
-          projectCode: "WSO",
-          important: false, 
-          done: false, 
-          dateCreate: [15, 4, 2021]
-        },
-        { label: 'Eat some cake',
-          time: 0,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
-          id: 2,
-          projectCode: "KLM",
-          important: false, 
-          done: false, 
-          dateCreate: [15, 4, 2021]
-        },
-        { label: 'Drink Coffee again',
-          time: 0,
-          description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed porttitor nisl quis lorem consectetur, non placerat odio cursus. Curabitur nunc dolor, tristique id orci at, cursus tempor augue. Vestibulum vitae congue mauris. Vivamus vitae felis quis tellus tincidunt pretium eu non dui. Nullam porta lectus ac risus placerat, non aliquam leo dapibus. Cras sit amet sapien feugiat, consectetur eros at, vulputate sapien. Pellentesque tincidunt velit lectus, cursus scelerisque lorem varius nec.",
-          id: 3,
-          projectCode: "TAYX",
-          important: false, 
-          done: false, 
-          dateCreate: [15, 4, 2021]
-        },
-      ],
+      todoData: [],
       label: "",
       filterProp: "all",
       chosenDate: [new Date().getDate(), new Date().getMonth() + 1, new Date().getFullYear()],
       detailsId: null,
       isVisibleDetails: false,
+    };
+
+    this.componentDidUpdate = () => {
+      store.set("todoData", this.state.todoData);
+    }
+
+    this.componentDidMount = () => {
+      const projectCode = this.props.match.params.projectCode;
+
+      const nowStore = store.get("todoData");
+      if(!nowStore){
+        store.set("todoData", 
+          [{  
+            label: 'Первая задача, тыкни на меня',
+            time: 0,
+            description: "Попробуйте добавить новые задачи на сегодня",
+            id: 1,
+            projectCode: projectCode,
+            important: false, 
+            done: false, 
+            dateCreate: [new Date().getDate(), new Date().getMonth() + 1, new Date().getFullYear()]
+          }]
+        );
+      }
+
+      this.setState({
+        todoData: store.get("todoData")
+      });
     };
 
     this.createTodoDataItem = (label, time, description, projectCode) => {
@@ -86,7 +88,8 @@ export default class App extends Component {
         const newTodoData = [
           ...todoData,
           newTodoItem
-        ]
+        ];
+
         return {
           todoData: newTodoData
         }
