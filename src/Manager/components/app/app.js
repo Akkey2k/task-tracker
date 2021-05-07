@@ -268,7 +268,7 @@ export default class App extends Component {
         <AppCalendar onChange={(date) => this.dateChange(date)}/>
 
         <div className="todo-app">
-          <AppHeader title={projectCode} toDo={ todoCount } done={ doneCount } />
+          <AppHeader toDo={ todoCount } done={ doneCount } />
           <div className="top-panel d-flex">
             <SearchPanel onSearchTodoItem={(label) => this.searchInputChanged(label)}/>
             <ItemStatusFilter onFilterTodoItems={(filter) => this.filterChanged(filter)}/>
