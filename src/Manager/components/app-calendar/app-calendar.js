@@ -26,10 +26,11 @@ export default class AppCalendar extends Component {
             date = date.date;
             
             const todoData = store.get("todoData");
+            const selectedProjectCode = store.get("selectedProjectCode");
             const calendarDate = [date.getDate(), date.getMonth() + 1, date.getFullYear()];
 
             for (const date in todoData) {
-                if(JSON.stringify(todoData[date].dateCreate) === JSON.stringify(calendarDate)){
+                if(todoData[date].projectCode === selectedProjectCode && JSON.stringify(todoData[date].dateCreate) === JSON.stringify(calendarDate)){
                     return "day-has-todo"
                 }
             }
