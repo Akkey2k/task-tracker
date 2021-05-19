@@ -54,7 +54,7 @@ export default class App extends Component {
     };
 
     this.createTodoDataItem = (label, time, description, projectCode) => {
-      const { todoData, chosenDate } = this.state;
+      const { chosenDate } = this.state;
       return {
         label, 
         time,
