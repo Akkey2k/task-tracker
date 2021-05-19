@@ -59,7 +59,7 @@ export default class App extends Component {
         label, 
         time,
         description,
-        id: todoData.length + 1,
+        id: Date.now(),
         projectCode,
         important: false,
         done: false,
