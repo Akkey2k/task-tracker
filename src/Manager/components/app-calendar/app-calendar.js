@@ -59,6 +59,20 @@ export default class AppCalendar extends Component {
                     onClickDay={(value) => this.onChange(value)}
                     value={value}
                 />
+                <div className="app-calendar-legend-map-wrapper">
+                    <div className="app-calendar-legend-map app-calendar-legend-map_has-todo">
+                        <i></i>
+                        <span>Все задачи выполнены</span>
+                    </div>
+                    <div className="app-calendar-legend-map app-calendar-legend-map_has-unfinished-todo">
+                        <i></i>
+                        <span>Не все задачи выполнены</span>
+                    </div>
+                    <div className="app-calendar-legend-map app-calendar-legend-map_has-chosen-day">
+                        <i></i>
+                        <span>Выбранный день</span>
+                    </div>
+                </div>
             </div>
         );
     }

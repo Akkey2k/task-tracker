@@ -7,3 +7,48 @@
 .app-calendar .day-has-todo{
     background-color: #d1e9ff;
 }
+
+.app-calendar .day-has-unfinished-todo{
+    background-color: #ff818d;
+}
+
+.app-calendar .app-calendar-legend-map-wrapper{
+    padding: 0.8em;
+    margin-top: 15px;
+    border: 1px solid #a0a096;
+}
+.app-calendar .app-calendar-legend-map{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+.app-calendar .app-calendar-legend-map:first-child{
+    margin-top: 0px;
+}
+
+.app-calendar .app-calendar-legend-map i{
+    width: 15px;
+    height: 15px;
+
+    margin-right: 10px;
+}
+
+.app-calendar .app-calendar-legend-map span {
+    font-size: 15px;
+}
+
+.app-calendar .app-calendar-legend-map_has-todo i{
+    background-color: #d1e9ff;
+}
+
+.app-calendar .app-calendar-legend-map_has-unfinished-todo i{
+    background-color: #ff818d;
+}
+
+.app-calendar .app-calendar-legend-map_has-chosen-day i{
+    background-color: #006edc;
+}
