@@ -6,14 +6,14 @@ import 'react-calendar/dist/Calendar.css';
 import './app-calendar.css';
 
 export default class AppCalendar extends Component {
-    constructor(){
+    constructor() {
         super();
-        
+
         this.state = {
             value: new Date(),
         }
 
-        this.onChange = (value) =>{
+        this.onChange = (value) => {
             this.setState({
                 value
             });
@@ -24,14 +24,26 @@ export default class AppCalendar extends Component {
 
         this.tileClassName = (date) => {
             date = date.date;
-            
+
             const todoData = store.get("todoData");
             const selectedProjectCode = store.get("selectedProjectCode");
             const calendarDate = [date.getDate(), date.getMonth() + 1, date.getFullYear()];
 
-            for (const date in todoData) {
-                if(todoData[date].projectCode === selectedProjectCode && JSON.stringify(todoData[date].dateCreate) === JSON.stringify(calendarDate)){
-                    return "day-has-todo"
+            let currentDayTodos = [];
+
+            for (let todo in todoData) {
+                if (JSON.stringify(todoData[todo].dateCreate) === JSON.stringify(calendarDate)) {
+                    currentDayTodos.push(todoData[todo]);
+                }
+            }
+
+            for (let data in todoData) {
+                if (currentDayTodos.length > 0 && todoData[data].projectCode === selectedProjectCode && JSON.stringify(todoData[data].dateCreate) === JSON.stringify(calendarDate)) {
+                    if (!todoData[data].done) {
+                        return "day-has-unfinished-todo"
+                    } else {
+                        return "day-has-todo"
+                    }
                 }
             }
         }
@@ -42,12 +54,12 @@ export default class AppCalendar extends Component {
 
         return (
             <div className="app-calendar">
-              <Calendar
-                tileClassName={(date) => this.tileClassName(date)}
-                onClickDay={(value)=> this.onChange(value)}
-                value={value}
-              />
+                <Calendar
+                    tileClassName={(date) => this.tileClassName(date)}
+                    onClickDay={(value) => this.onChange(value)}
+                    value={value}
+                />
             </div>
-          );
+        );
     }
 };
