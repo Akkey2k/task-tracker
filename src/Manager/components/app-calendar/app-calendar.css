@@ -4,6 +4,9 @@
     top: 2rem;
     left: 2rem;
 }
+.app-calendar .react-calendar{
+    width: 100%;
+}
 .app-calendar .day-has-todo{
     background-color: #d1e9ff;
 }
@@ -14,6 +17,7 @@
 
 .app-calendar .app-calendar-legend-map-wrapper{
     padding: 0.8em;
+    box-sizing: border-box;
     margin-top: 15px;
     border: 1px solid #a0a096;
 }
