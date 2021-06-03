@@ -37,15 +37,23 @@ export default class AppCalendar extends Component {
                 }
             }
 
-            for (let data in todoData) {
-                if (currentDayTodos.length > 0 && todoData[data].projectCode === selectedProjectCode && JSON.stringify(todoData[data].dateCreate) === JSON.stringify(calendarDate)) {
-                    if (!todoData[data].done) {
-                        return "day-has-unfinished-todo"
-                    } else {
-                        return "day-has-todo"
+            let currentDayDoneTodos = [];
+
+            for (let data in currentDayTodos) {
+                if (currentDayTodos[data].projectCode === selectedProjectCode) {
+                    for (let i = 0; i < currentDayTodos.length; i++) {
+                        if (!currentDayTodos[data].done) {
+                            currentDayDoneTodos.push(currentDayTodos[data]);
+                        }
                     }
                 }
             }
+
+            if(currentDayDoneTodos.length > 0){
+                return "day-has-unfinished-todo"
+            } else if (currentDayTodos.length > 0) {
+                return "day-has-todo"
+            } 
         }
     }
 
