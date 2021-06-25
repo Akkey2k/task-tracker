@@ -32,7 +32,7 @@ export default class AppCalendar extends Component {
             let currentDayTodos = [];
 
             for (let todo in todoData) {
-                if (JSON.stringify(todoData[todo].dateCreate) === JSON.stringify(calendarDate)) {
+                if (JSON.stringify(todoData[todo].dateCreate) === JSON.stringify(calendarDate) && todoData[todo].projectCode === selectedProjectCode) {
                     currentDayTodos.push(todoData[todo]);
                 }
             }
