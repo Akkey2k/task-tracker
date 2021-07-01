@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Calendar from 'react-calendar';
+import AppExportCSV from '../app-export';
 import store from "store";
 
 import 'react-calendar/dist/Calendar.css';
@@ -11,11 +12,41 @@ export default class AppCalendar extends Component {
 
         this.state = {
             value: new Date(),
+            exportData: store.get("todoData")
+        }
+
+        this.getExportData = (clickedDate) => {
+            const date = [clickedDate.getDate(), clickedDate.getMonth() + 1, clickedDate.getFullYear()] 
+            const dataStore = store.get("todoData");
+
+            let currentData = [];
+
+            for (const data of dataStore) {
+                if(data.dateCreate[0] <= date[0] && data.dateCreate[1] <= date[1] && data.dateCreate[2] <= date[2]){
+                    if(data.projectCode === store.get("selectedProjectCode")){
+                        currentData.push(data);
+                    }
+                }
+            }
+
+            let correctData = [];
+
+            for (const data of currentData) {
+                correctData.push({
+                    "Название": data.label,
+                    "Время": data.time,
+                    "Описание": data.description,
+                    "Дата": data.dateCreate[0] + "." + data.dateCreate[1] + "." + data.dateCreate[2]
+                });
+            }
+
+            return correctData;
         }
 
         this.onChange = (value) => {
             this.setState({
-                value
+                value,
+                exportData: this.getExportData(value)
             });
 
             const { onChange } = this.props;
@@ -58,7 +89,7 @@ export default class AppCalendar extends Component {
     }
 
     render() {
-        const { value } = this.state;
+        const { value, exportData } = this.state;
 
         return (
             <div className="app-calendar">
@@ -81,6 +112,7 @@ export default class AppCalendar extends Component {
                         <span>Выбранный день</span>
                     </div>
                 </div>
+                <AppExportCSV csvData={exportData} fileName="Jira Hours"/>
             </div>
         );
     }
