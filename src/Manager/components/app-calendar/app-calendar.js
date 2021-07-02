@@ -22,7 +22,7 @@ export default class AppCalendar extends Component {
             let currentData = [];
 
             for (const data of dataStore) {
-                if(data.dateCreate[0] <= date[0] && data.dateCreate[1] <= date[1] && data.dateCreate[2] <= date[2]){
+                if(data.dateCreate[0] >= date[0] && data.dateCreate[1] >= date[1] && data.dateCreate[2] >= date[2]){
                     if(data.projectCode === store.get("selectedProjectCode")){
                         currentData.push(data);
                     }

@@ -13,6 +13,10 @@ const AppExportCSV = ({csvData, fileName}) => {
     if(JSON.stringify(csvData) === JSON.stringify(store.get("todoData"))){
         exportBtnDisabled = true;
     };
+
+    if(csvData.length === 0){
+        exportBtnDisabled = true;
+    };
     
     const exportToCSV = (csvData, fileName) => {
         const ws = XLSX.utils.json_to_sheet(csvData);
