@@ -262,6 +262,13 @@ export default class App extends Component {
     // Счетчики more to do\done задач
     const doneCount = visibleItems.filter((el) => el.done).length;
     const todoCount = visibleItems.length - doneCount;
+    const totalHours = visibleItems.length !== 0 
+        ? visibleItems.map((current) => {
+            return current.time;
+        }).reduce((prev, current) => {
+            return prev + current;
+        })
+        : 0;
 
     return (
       <div className="app-wrapper">
@@ -269,6 +276,7 @@ export default class App extends Component {
 
         <div className="todo-app">
           <AppHeader toDo={ todoCount } done={ doneCount } />
+          <h6 style={{textAlign: "right"}}>Total hours: {totalHours}</h6>
           <div className="top-panel d-flex">
             <SearchPanel onSearchTodoItem={(label) => this.searchInputChanged(label)}/>
             <ItemStatusFilter onFilterTodoItems={(filter) => this.filterChanged(filter)}/>
