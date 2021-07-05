@@ -34,7 +34,7 @@ const AppExportCSV = ({csvData, fileName}) => {
         FileSaver.saveAs(data, fileName + fileExtension);
     }
     return (
-        <Button variant="warning" disabled={exportBtnDisabled} className="mt-3 w-100" onClick={(e) => exportToCSV(csvData,fileName)}>Экспорт данных</Button>
+        <Button variant="warning" disabled={exportBtnDisabled} className="mt-3"  style={{width: 75 + "%", marginRight: 5 + "%"}} onClick={(e) => exportToCSV(csvData,fileName)}>Экспорт данных</Button>
     )
 }
 

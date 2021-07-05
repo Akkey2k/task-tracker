@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Calendar from 'react-calendar';
 import AppExportCSV from '../app-export';
+import Button from 'react-bootstrap/Button';
 import store from "store";
 
 import 'react-calendar/dist/Calendar.css';
@@ -86,6 +87,19 @@ export default class AppCalendar extends Component {
                 return "day-has-todo"
             } 
         }
+
+        this.copyToClipboard = () => {
+            const str = JSON.stringify(this.getExportData(this.state.value));
+            const el = document.createElement('textarea');
+            el.value = str;
+            el.setAttribute('readonly', '');
+            el.style.position = 'absolute';
+            el.style.left = '-9999px';
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
     }
 
     render() {
@@ -113,6 +127,7 @@ export default class AppCalendar extends Component {
                     </div>
                 </div>
                 <AppExportCSV csvData={exportData} fileName="Jira Hours"/>
+                <Button variant="primary" className="mt-3" style={{width: 20 + "%"}} onClick={this.copyToClipboard}>Copy</Button>
             </div>
         );
     }
