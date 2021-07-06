@@ -35,8 +35,7 @@ export default class AppCalendar extends Component {
             for (const data of currentData) {
                 correctData.push({
                     "Название": data.label,
-                    "Время": data.time,
-                    "Описание": data.description,
+                    "Время": data.time + " ч.",
                     "Дата": data.dateCreate[0] + "." + data.dateCreate[1] + "." + data.dateCreate[2]
                 });
             }
@@ -89,7 +88,13 @@ export default class AppCalendar extends Component {
         }
 
         this.copyToClipboard = () => {
-            const str = JSON.stringify(this.getExportData(this.state.value));
+            let str = JSON.stringify(this.getExportData(this.state.value));
+
+            var regExpStr = str.replace(new RegExp(/[&\/\\#+()$~%'"*?<>}"[]/g), " ")
+                             .replace(new RegExp(/[{,]/g), "\n");
+
+            str = regExpStr.slice(0, -1);
+
             const el = document.createElement('textarea');
             el.value = str;
             el.setAttribute('readonly', '');

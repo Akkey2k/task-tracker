@@ -23,7 +23,6 @@ const AppExportCSV = ({csvData, fileName}) => {
         var wscols = [
             {wch:80},
             {wch:10},
-            {wch:20},
             {wch:15}
         ];
         
@@ -34,7 +33,7 @@ const AppExportCSV = ({csvData, fileName}) => {
         FileSaver.saveAs(data, fileName + fileExtension);
     }
     return (
-        <Button variant="warning" disabled={exportBtnDisabled} className="mt-3"  style={{width: 75 + "%", marginRight: 5 + "%"}} onClick={(e) => exportToCSV(csvData,fileName)}>Экспорт данных</Button>
+        <Button variant="warning" disabled={exportBtnDisabled} className="mt-3"  style={{width: 75 + "%", marginRight: 5 + "%"}} onClick={(e) => exportToCSV(csvData,fileName)}>Export XLSX</Button>
     )
 }
 
