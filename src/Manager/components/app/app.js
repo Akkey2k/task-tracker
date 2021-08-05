@@ -188,13 +188,11 @@ export default class App extends Component {
 
     this.findItemsByDate = (visibleItems, date) => {
       let findedTodoItems = visibleItems.filter((el) => {
-        for(let i in date){
-          if(el.dateCreate[i] === date[i]){
-            return true
-          }
-          else{
-            return false
-          }
+        if(JSON.stringify(el.dateCreate) === JSON.stringify(date)){
+          return true
+        }
+        else{
+          return false
         }
 
         return false;
