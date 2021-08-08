@@ -14,7 +14,7 @@ const AppExportCSV = ({csvData, fileName}) => {
         exportBtnDisabled = true;
     };
 
-    if(csvData.length === 0){
+    if(!csvData || csvData.length === 0){
         exportBtnDisabled = true;
     };
     
